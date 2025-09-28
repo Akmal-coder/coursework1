@@ -13,8 +13,15 @@ from src.utils import filter_by_date, get_date
 def _default_name(func):
     return f"../reports/report_{func.__name__}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
 
+    """
+        Генерирует стандартное имя файла для отчета.
+    """
+
 
 def report_writer(arg=None):
+    """
+    Декоратор для автоматического сохранения результатов функций в JSON файлы.
+    """
     if callable(arg):  # @report_writer
         func = arg
 
@@ -41,6 +48,9 @@ def report_writer(arg=None):
 
 
 def _write_json(filename, result):
+    """
+    Сохраняет результат в JSON файл.
+    """
     os.makedirs(os.path.dirname(filename) or ".", exist_ok=True)
     if pd is not None and isinstance(result, pd.DataFrame):
         result.to_json(
@@ -55,6 +65,10 @@ def _write_json(filename, result):
 def spending_by_category(
     transactions: pd.DataFrame, category: str, date: Optional[str] = None
 ) -> pd.DataFrame:
+    """
+    Анализирует расходы по указанной категории за последние 3 месяца.
+    """
+
     end_date = datetime.now()
     if date is not None:
         end_date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S").date()
