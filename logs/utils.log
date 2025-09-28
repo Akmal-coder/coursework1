@@ -1,0 +1,5 @@
+2025-09-28 19:38:39,997 - utils - INFO - read_transactions_xlsx: Reading file from: ../data/operations.xlsx
+2025-09-28 19:38:43,037 - utils - INFO - read_transactions_xlsx: Reading file from: ../data/operations.xlsx
+2025-09-28 19:38:45,637 - utils - INFO - load_json_data: Reading file from: ../user_settings.json
+2025-09-28 19:38:56,652 - utils - INFO - read_transactions_xlsx: Reading file from: ../data/operations.xlsx
+2025-09-28 19:38:59,307 - utils - INFO - read_transactions_xlsx: Reading file from: ../data/operations.xlsx
