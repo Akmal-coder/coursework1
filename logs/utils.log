@@ -1,14 +1,14 @@
-2025-09-28 22:25:06,585 - utils - WARNING - read_transactions_xlsx: File not found
-2025-09-28 22:25:06,592 - utils - WARNING - read_transactions_xlsx: File is empty
-2025-09-28 22:25:06,604 - utils - INFO - read_transactions_xlsx: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-6\test_successful_read0\test.xlsx
-2025-09-28 22:25:06,629 - utils - INFO - read_transactions_xlsx: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-6\test_empty_dataframe0\test.xlsx
-2025-09-28 22:25:06,642 - utils - INFO - read_transactions_xlsx: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-6\test_to_dict_returns_non_list0\test.xlsx
-2025-09-28 22:25:06,642 - utils - WARNING - read_transactions_xlsx: File does not contain valid data
-2025-09-28 22:25:06,652 - utils - WARNING - load_json_data: File not found
-2025-09-28 22:25:06,660 - utils - WARNING - load_json_data: File is empty
-2025-09-28 22:25:06,671 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-6\test_successful_read_dict0\test.json
-2025-09-28 22:25:06,682 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-6\test_json_with_list_returns_em0\test.json
-2025-09-28 22:25:06,683 - utils - WARNING - load_json_data: File does not contain valid data
-2025-09-28 22:25:06,693 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-6\test_invalid_json_format0\test.json
-2025-09-28 22:25:06,694 - utils - ERROR - load_json_data: Incorrect data
-2025-09-28 22:25:06,704 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-6\test_nested_dict_structure0\test.json
+2025-09-29 22:01:14,350 - utils - WARNING - read_transactions_xlsx: File not found
+2025-09-29 22:01:14,360 - utils - WARNING - read_transactions_xlsx: File is empty
+2025-09-29 22:01:14,374 - utils - INFO - read_transactions_xlsx: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-8\test_successful_read0\test.xlsx
+2025-09-29 22:01:14,391 - utils - INFO - read_transactions_xlsx: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-8\test_empty_dataframe0\test.xlsx
+2025-09-29 22:01:14,405 - utils - INFO - read_transactions_xlsx: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-8\test_to_dict_returns_non_list0\test.xlsx
+2025-09-29 22:01:14,406 - utils - WARNING - read_transactions_xlsx: File does not contain valid data
+2025-09-29 22:01:14,415 - utils - WARNING - load_json_data: File not found
+2025-09-29 22:01:14,425 - utils - WARNING - load_json_data: File is empty
+2025-09-29 22:01:14,453 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-8\test_successful_read_dict0\test.json
+2025-09-29 22:01:14,466 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-8\test_json_with_list_returns_em0\test.json
+2025-09-29 22:01:14,466 - utils - WARNING - load_json_data: File does not contain valid data
+2025-09-29 22:01:14,478 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-8\test_invalid_json_format0\test.json
+2025-09-29 22:01:14,479 - utils - ERROR - load_json_data: Incorrect data
+2025-09-29 22:01:14,500 - utils - INFO - load_json_data: Reading file from: C:\Users\sazer\AppData\Local\Temp\pytest-of-sazer\pytest-8\test_nested_dict_structure0\test.json

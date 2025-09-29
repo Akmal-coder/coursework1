@@ -30,9 +30,7 @@ def main_page(date_string: str) -> str:
 
     transaction = read_transactions_xlsx("../data/operations.xlsx")
 
-    filtered_transactions = filter_by_date(
-        transaction, date_start_of_month, date_end_of_month
-    )
+    filtered_transactions = filter_by_date(transaction, date_start_of_month, date_end_of_month)
     filtered_transactions = filter_by_state(filtered_transactions)
 
     user_settings = load_json_data("../user_settings.json")

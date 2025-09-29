@@ -1,3 +1,4 @@
+from typing import Dict
 from unittest.mock import MagicMock, patch
 
 import pandas as pd
@@ -11,7 +12,9 @@ class TestReports:
     @patch("src.reports._write_json")
     @patch("src.reports.get_date")
     @patch("src.reports.filter_by_date")
-    def test_spending_by_category_basic(self, mock_filter, mock_get_date, mock_write):
+    def test_spending_by_category_basic(
+        self, mock_filter: MagicMock, mock_get_date: MagicMock, mock_write: MagicMock
+    ) -> None:
         """Тест базовой работы spending_by_category"""
         # Подготовка моков
         mock_get_date.return_value = "2024-01-01"
@@ -52,17 +55,13 @@ class TestReports:
     @patch("src.reports.get_date")
     @patch("src.reports.filter_by_date")
     def test_spending_by_category_with_date(
-        self, mock_filter, mock_get_date, mock_write
-    ):
+        self, mock_filter: MagicMock, mock_get_date: MagicMock, mock_write: MagicMock
+    ) -> None:
         """Тест spending_by_category с указанной датой"""
         mock_get_date.return_value = "2024-03-01"
-        mock_filter.return_value = [
-            {"Дата": "2024-02-15", "Категория": "Транспорт", "Сумма": -100}
-        ]
+        mock_filter.return_value = [{"Дата": "2024-02-15", "Категория": "Транспорт", "Сумма": -100}]
 
-        test_data = pd.DataFrame(
-            [{"Дата": "2024-02-15", "Категория": "Транспорт", "Сумма": -100}]
-        )
+        test_data = pd.DataFrame([{"Дата": "2024-02-15", "Категория": "Транспорт", "Сумма": -100}])
 
         result = spending_by_category(test_data, "Транспорт", "2024-03-01 12:00:00")
 
@@ -75,18 +74,14 @@ class TestReports:
     @patch("src.reports.get_date")
     @patch("src.reports.filter_by_date")
     def test_spending_by_category_no_results(
-        self, mock_filter, mock_get_date, mock_write
-    ):
+        self, mock_filter: MagicMock, mock_get_date: MagicMock, mock_write: MagicMock
+    ) -> None:
         """Тест когда нет данных по категории"""
         mock_get_date.return_value = "2024-01-01"
         # Возвращаем DataFrame с данными, но без нужной категории
-        mock_filter.return_value = [
-            {"Дата": "2024-01-15", "Категория": "Транспорт", "Сумма": -100}
-        ]
+        mock_filter.return_value = [{"Дата": "2024-01-15", "Категория": "Транспорт", "Сумма": -100}]
 
-        test_data = pd.DataFrame(
-            [{"Дата": "2024-01-15", "Категория": "Транспорт", "Сумма": -100}]
-        )
+        test_data = pd.DataFrame([{"Дата": "2024-01-15", "Категория": "Транспорт", "Сумма": -100}])
 
         result = spending_by_category(test_data, "Еда")  # Ищем категорию которой нет
 
@@ -96,7 +91,7 @@ class TestReports:
 
     @patch("src.reports.os.makedirs")
     @patch("src.reports.open")
-    def test_write_json_with_dataframe(self, mock_open, mock_makedirs):
+    def test_write_json_with_dataframe(self, mock_open: MagicMock, mock_makedirs: MagicMock) -> None:
         """Тест записи JSON с DataFrame"""
         test_df = pd.DataFrame(
             [
@@ -113,7 +108,7 @@ class TestReports:
 
     @patch("src.reports.os.makedirs")
     @patch("src.reports.open")
-    def test_write_json_with_dict(self, mock_open, mock_makedirs):
+    def test_write_json_with_dict(self, mock_open: MagicMock, mock_makedirs: MagicMock) -> None:
         """Тест записи JSON со словарем"""
         test_data = {"result": "success", "count": 5}
         mock_file = MagicMock()
@@ -125,11 +120,11 @@ class TestReports:
         mock_open.assert_called_once_with("test_report.json", "w", encoding="utf-8")
 
     @patch("src.reports._write_json")
-    def test_report_writer_decorator(self, mock_write):
+    def test_report_writer_decorator(self, mock_write: MagicMock) -> None:
         """Тест декоратора report_writer"""
 
         @report_writer()
-        def test_function():
+        def test_function() -> Dict[str, str]:
             return {"data": "test"}
 
         result = test_function()
@@ -138,11 +133,11 @@ class TestReports:
         mock_write.assert_called_once()
 
     @patch("src.reports._write_json")
-    def test_report_writer_with_filename(self, mock_write):
+    def test_report_writer_with_filename(self, mock_write: MagicMock) -> None:
         """Тест декоратора report_writer с именем файла"""
 
         @report_writer("custom_report.json")
-        def test_function():
+        def test_function() -> pd.DataFrame:
             return pd.DataFrame([{"test": "data"}])
 
         result = test_function()
