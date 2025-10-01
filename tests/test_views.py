@@ -16,18 +16,18 @@ from src.views import main_page
 @patch("src.views.get_current_exchange_rate")
 @patch("src.views.get_stock")
 def test_main_page_returns_json_string(
-    mock_get_stock,
-    mock_get_exchange_rate,
-    mock_get_top_transactions,
-    mock_get_card_infos,
-    mock_get_greeting,
-    mock_load_json_data,
-    mock_filter_by_state,
-    mock_filter_by_date,
-    mock_read_transactions_xlsx,
-    mock_get_date,
-    mock_datetime,
-):
+    mock_get_stock: Mock,
+    mock_get_exchange_rate: Mock,
+    mock_get_top_transactions: Mock,
+    mock_get_card_infos: Mock,
+    mock_get_greeting: Mock,
+    mock_load_json_data: Mock,
+    mock_filter_by_state: Mock,
+    mock_filter_by_date: Mock,
+    mock_read_transactions_xlsx: Mock,
+    mock_get_date: Mock,
+    mock_datetime: Mock,
+) -> None:
     """Тест что функция возвращает JSON строку"""
     # Мокаем datetime
     mock_now = Mock()
@@ -92,18 +92,18 @@ def test_main_page_returns_json_string(
 @patch("src.views.get_current_exchange_rate")
 @patch("src.views.get_stock")
 def test_json_structure_and_content(
-    mock_get_stock,
-    mock_get_exchange_rate,
-    mock_get_top_transactions,
-    mock_get_card_infos,
-    mock_get_greeting,
-    mock_load_json_data,
-    mock_filter_by_state,
-    mock_filter_by_date,
-    mock_read_transactions_xlsx,
-    mock_get_date,
-    mock_datetime,
-):
+    mock_get_stock: Mock,
+    mock_get_exchange_rate: Mock,
+    mock_get_top_transactions: Mock,
+    mock_get_card_infos: Mock,
+    mock_get_greeting: Mock,
+    mock_load_json_data: Mock,
+    mock_filter_by_state: Mock,
+    mock_filter_by_date: Mock,
+    mock_read_transactions_xlsx: Mock,
+    mock_get_date: Mock,
+    mock_datetime: Mock,
+) -> None:
     """Тест структуры и содержимого JSON"""
     # Настраиваем моки
     mock_now = Mock()
@@ -113,9 +113,7 @@ def test_json_structure_and_content(
     mock_datetime.return_value = Mock()
     mock_datetime.strftime.return_value = "2023-01-01 00:00:00"
 
-    mock_get_date.side_effect = lambda x: (
-        "01.01.2023" if "2023-01-01" in x else "20.01.2021"
-    )
+    mock_get_date.side_effect = lambda x: ("01.01.2023" if "2023-01-01" in x else "20.01.2021")
 
     # Мокаем данные
     mock_read_transactions_xlsx.return_value = [{"transaction": "data"}]

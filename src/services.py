@@ -12,9 +12,7 @@ logger = logging.getLogger("services")
 logger.setLevel(logging.DEBUG)
 log_file = LOG_DIR / "services.log"
 file_handler = logging.FileHandler(log_file, mode="w")
-file_formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(funcName)s: %(message)s"
-)
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(funcName)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 

@@ -1,14 +1,24 @@
 import json
+from typing import Any
 from unittest.mock import Mock, patch
 
 import pandas as pd
 import pytest
 
-from src.utils import (filter_by_date, filter_by_state, get_card_infos,
-                       get_cashback, get_current_exchange_rate, get_date,
-                       get_greeting, get_last_four, get_stock,
-                       get_top_transactions, load_json_data,
-                       read_transactions_xlsx)
+from src.utils import (
+    filter_by_date,
+    filter_by_state,
+    get_card_infos,
+    get_cashback,
+    get_current_exchange_rate,
+    get_date,
+    get_greeting,
+    get_last_four,
+    get_stock,
+    get_top_transactions,
+    load_json_data,
+    read_transactions_xlsx,
+)
 
 
 @pytest.mark.parametrize(
@@ -40,12 +50,12 @@ from src.utils import (filter_by_date, filter_by_state, get_card_infos,
         (23, "Добрый вечер"),
     ],
 )
-def test_get_greeting_all_hours(hour, expected):
+def test_get_greeting_all_hours(hour: int, expected: str) -> None:
     """Тестируем все возможные значения часов"""
     assert get_greeting(hour) == expected
 
 
-def test_get_greeting_boundary_values():
+def test_get_greeting_boundary_values() -> None:
     """Тестируем граничные значения"""
     assert get_greeting(0) == "Доброй ночи"
     assert get_greeting(5) == "Доброй ночи"
@@ -57,14 +67,14 @@ def test_get_greeting_boundary_values():
     assert get_greeting(23) == "Добрый вечер"
 
 
-def test_read_transactions_xlsx_file_not_found(tmp_path):
+def test_read_transactions_xlsx_file_not_found(tmp_path: Any) -> None:
     """Тест когда файл не существует"""
     non_existent_file = tmp_path / "nonexistent.xlsx"
     result = read_transactions_xlsx(str(non_existent_file))
     assert result == []
 
 
-def test_empty_file(tmp_path):
+def test_empty_file(tmp_path: Any) -> None:
     """Тест когда файл пустой"""
     empty_file = tmp_path / "empty.xlsx"
     empty_file.write_bytes(b"")  # Создаем пустой файл
@@ -74,7 +84,7 @@ def test_empty_file(tmp_path):
 
 
 @patch("src.utils.pd.read_excel")
-def test_successful_read(mock_read_excel, tmp_path):
+def test_successful_read(mock_read_excel: Mock, tmp_path: Any) -> None:
     """Тест успешного чтения файла"""
     # Создаем тестовый файл
     test_file = tmp_path / "test.xlsx"
@@ -98,7 +108,7 @@ def test_successful_read(mock_read_excel, tmp_path):
 
 
 @patch("src.utils.pd.read_excel")
-def test_empty_dataframe(mock_read_excel, tmp_path):
+def test_empty_dataframe(mock_read_excel: Mock, tmp_path: Any) -> None:
     """Тест когда Excel файл пустой"""
     test_file = tmp_path / "test.xlsx"
     test_file.write_bytes(b"test data")
@@ -110,7 +120,7 @@ def test_empty_dataframe(mock_read_excel, tmp_path):
 
 
 @patch("src.utils.pd.read_excel")
-def test_to_dict_returns_non_list(mock_read_excel, tmp_path):
+def test_to_dict_returns_non_list(mock_read_excel: Mock, tmp_path: Any) -> None:
     """Тест когда to_dict возвращает не список"""
     test_file = tmp_path / "test.xlsx"
     test_file.write_bytes(b"test data")
@@ -127,14 +137,14 @@ def test_to_dict_returns_non_list(mock_read_excel, tmp_path):
         assert result == []
 
 
-def test_load_json_data_file_not_found(tmp_path):
+def test_load_json_data_file_not_found(tmp_path: Any) -> None:
     """Тест когда файл не существует"""
     non_existent_file = tmp_path / "nonexistent.json"
     result = load_json_data(str(non_existent_file))
     assert result == {}
 
 
-def test_load_json_data_empty_file(tmp_path):
+def test_load_json_data_empty_file(tmp_path: Any) -> None:
     """Тест когда файл пустой"""
     empty_file = tmp_path / "empty.json"
     empty_file.write_text("")  # Создаем пустой файл
@@ -143,7 +153,7 @@ def test_load_json_data_empty_file(tmp_path):
     assert result == {}
 
 
-def test_successful_read_dict(tmp_path):
+def test_successful_read_dict(tmp_path: Any) -> None:
     """Тест успешного чтения JSON с словарем"""
     test_data = {"key": "value", "number": 123, "list": [1, 2, 3]}
     test_file = tmp_path / "test.json"
@@ -154,7 +164,7 @@ def test_successful_read_dict(tmp_path):
     assert isinstance(result, dict)
 
 
-def test_json_with_list_returns_empty_dict(tmp_path):
+def test_json_with_list_returns_empty_dict(tmp_path: Any) -> None:
     """Тест когда JSON содержит список вместо словаря"""
     test_data = [1, 2, 3, 4, 5]
     test_file = tmp_path / "test.json"
@@ -164,7 +174,7 @@ def test_json_with_list_returns_empty_dict(tmp_path):
     assert result == {}  # Должен вернуть пустой словарь
 
 
-def test_invalid_json_format(tmp_path):
+def test_invalid_json_format(tmp_path: Any) -> None:
     """Тест когда файл содержит невалидный JSON"""
     test_file = tmp_path / "test.json"
     test_file.write_text('{"invalid": json, missing quotes}')
@@ -173,7 +183,7 @@ def test_invalid_json_format(tmp_path):
     assert result == {}
 
 
-def test_nested_dict_structure(tmp_path):
+def test_nested_dict_structure(tmp_path: Any) -> None:
     """Тест со сложной вложенной структурой"""
     test_data = {
         "user": {
@@ -191,65 +201,65 @@ def test_nested_dict_structure(tmp_path):
     assert result["user"]["name"] == "John"
 
 
-def test_normal_string():
+def test_normal_string() -> None:
     """Тест обычной строки достаточной длины"""
     assert get_last_four("123456789") == "6789"
     assert get_last_four("hello world") == "orld"
 
 
-def test_exactly_four_chars():
+def test_exactly_four_chars() -> None:
     """Тест строки длиной ровно 4 символа"""
     assert get_last_four("1234") == "1234"
     assert get_last_four("abcd") == "abcd"
 
 
-def test_less_than_four_chars():
+def test_less_than_four_chars() -> None:
     """Тест строки менее 4 символов"""
     assert get_last_four("123") == "123"
     assert get_last_four("ab") == "ab"
     assert get_last_four("x") == "x"
 
 
-def test_empty_string():
+def test_empty_string() -> None:
     """Тест пустой строки"""
     assert get_last_four("") == "None"
 
 
-def test_positive_amounts():
+def test_positive_amounts() -> None:
     """Тест положительных сумм"""
     assert get_cashback(100.0) == 1.0
     assert get_cashback(1000.0) == 10.0
     assert get_cashback(500.0) == 5.0
 
 
-def test_rounding():
+def test_rounding() -> None:
     """Тест округления"""
     assert get_cashback(123.45) == 1.23
     assert get_cashback(99.99) == 1.0  # 0.9999 → 1.0
     assert get_cashback(1234.56) == 12.35  # 12.3456 → 12.35
 
 
-def test_zero_amount():
+def test_zero_amount() -> None:
     """Тест нулевой суммы"""
     assert get_cashback(0.0) == 0.0
     assert get_cashback(0) == 0.0
 
 
-def test_small_amounts():
+def test_small_amounts() -> None:
     """Тест маленьких сумм"""
     assert get_cashback(1.0) == 0.01
     assert get_cashback(0.5) == 0.01  # 0.005 → 0.01
     assert get_cashback(0.1) == 0.0  # 0.001 → 0.0
 
 
-def test_negative_amounts():
+def test_negative_amounts() -> None:
     """Тест отрицательных сумм"""
     assert get_cashback(-100.0) == -1.0
     assert get_cashback(-500.0) == -5.0
     assert get_cashback(-123.45) == -1.23
 
 
-def test_filter_ok_status():
+def test_filter_ok_status() -> None:
     """Тест фильтрации по статусу 'OK' (по умолчанию)"""
     data = [
         {"Статус": "OK", "Сумма": 100},
@@ -267,7 +277,7 @@ def test_filter_ok_status():
     assert result == expected
 
 
-def test_filter_custom_status():
+def test_filter_custom_status() -> None:
     """Тест фильтрации по кастомному статусу"""
     data = [
         {"Статус": "PENDING", "Сумма": 100},
@@ -284,7 +294,7 @@ def test_filter_custom_status():
     assert result == expected
 
 
-def test_empty_result():
+def test_empty_result() -> None:
     """Тест когда нет подходящих записей"""
     data = [
         {"Статус": "PENDING", "Сумма": 100},
@@ -295,7 +305,7 @@ def test_empty_result():
     assert result == []
 
 
-def test_all_match():
+def test_all_match() -> None:
     """Тест когда все записи подходят"""
     data = [
         {"Статус": "OK", "Сумма": 100},
@@ -306,13 +316,13 @@ def test_all_match():
     assert result == data
 
 
-def test_empty_input_list():
+def test_empty_input_list() -> None:
     """Тест с пустым входным списком"""
     with pytest.raises(ValueError, match="Пустой список"):
         filter_by_state([])
 
 
-def test_basic_functionality():
+def test_basic_functionality() -> None:
     """Тест основной функциональности"""
     transactions = [
         {"Номер карты": "1234567812345678", "Сумма платежа": -1000.0},
@@ -334,13 +344,13 @@ def test_basic_functionality():
     assert result == expected
 
 
-def test_empty_transactions():
+def test_empty_transactions() -> None:
     """Тест с пустым списком транзакций"""
     result = get_card_infos([])
     assert result == []
 
 
-def test_only_positive_transactions():
+def test_only_positive_transactions() -> None:
     """Тест когда все транзакции положительные"""
     transactions = [
         {"Номер карты": "1234567812345678", "Сумма платежа": 1000.0},
@@ -351,7 +361,7 @@ def test_only_positive_transactions():
     assert result == []
 
 
-def test_single_card_multiple_transactions():
+def test_single_card_multiple_transactions() -> None:
     """Тест одной карты с несколькими транзакциями"""
     transactions = [
         {"Номер карты": "1111222233334444", "Сумма платежа": -100.0},
@@ -366,7 +376,7 @@ def test_single_card_multiple_transactions():
     assert result == expected
 
 
-def test_get_top_transactions_basic_functionality():
+def test_get_top_transactions_basic_functionality() -> None:
     """Тест основной функциональности - топ-5 по абсолютной сумме"""
     transactions = [
         {
@@ -415,7 +425,7 @@ def test_get_top_transactions_basic_functionality():
     assert [t["amount"] for t in result] == expected_order
 
 
-def test_less_than_five_transactions():
+def test_less_than_five_transactions() -> None:
     """Тест когда транзакций меньше 5"""
     transactions = [
         {
@@ -438,13 +448,13 @@ def test_less_than_five_transactions():
     assert [t["amount"] for t in result] == [-1000.0, -500.0]
 
 
-def test_get_top_transactions_empty_transactions():
+def test_get_top_transactions_empty_transactions() -> None:
     """Тест с пустым списком транзакций"""
     result = get_top_transactions([])
     assert result == []
 
 
-def test_positive_and_negative_amounts():
+def test_positive_and_negative_amounts() -> None:
     """Тест с положительными и отрицательными суммами"""
     transactions = [
         {
@@ -481,7 +491,7 @@ def test_positive_and_negative_amounts():
 
 
 @patch("src.utils.requests.get")
-def test_single_currency(mock_get):
+def test_single_currency(mock_get: Mock) -> None:
     """Тест для одной валюты"""
     # Мокаем ответ API
     mock_response = Mock()
@@ -501,11 +511,11 @@ def test_single_currency(mock_get):
 
 
 @patch("src.utils.requests.get")
-def test_multiple_currencies(mock_get):
+def test_multiple_currencies(mock_get: Mock) -> None:
     """Тест для нескольких валют"""
 
     # Мокаем разные ответы для разных валют
-    def side_effect(*args, **kwargs):
+    def side_effect(*args: Any, **kwargs: Any) -> Mock:
         mock_response = Mock()
         base_currency = kwargs["params"]["base"]
         rates = {"USD": 91.23, "EUR": 98.45, "GBP": 115.67}
@@ -529,7 +539,7 @@ def test_multiple_currencies(mock_get):
 
 
 @patch("src.utils.requests.get")
-def test_get_current_exchange_rate_rounding(mock_get):
+def test_get_current_exchange_rate_rounding(mock_get: Mock) -> None:
     """Тест округления курса"""
     mock_response = Mock()
     mock_response.json.return_value = {"rates": {"RUB": 91.23456}, "success": True}
@@ -543,7 +553,7 @@ def test_get_current_exchange_rate_rounding(mock_get):
 
 
 @patch("src.utils.requests.get")
-def test_single_stock_success(mock_get):
+def test_single_stock_success(mock_get: Mock) -> None:
     """Тест для одной успешной акции"""
     # Мокаем ответ API
     mock_response = Mock()
@@ -571,17 +581,15 @@ def test_single_stock_success(mock_get):
 
 
 @patch("src.utils.requests.get")
-def test_multiple_stocks_success(mock_get):
+def test_multiple_stocks_success(mock_get: Mock) -> None:
     """Тест для нескольких успешных акций"""
 
     # Мокаем разные ответы для разных акций
-    def side_effect(*args, **kwargs):
+    def side_effect(*args: Any, **kwargs: Any) -> Mock:
         mock_response = Mock()
         symbol = kwargs["params"]["symbol"]
         prices = {"AAPL": "255.4600", "GOOGL": "246.5400", "TSLA": "440.4000"}
-        mock_response.json.return_value = {
-            "Global Quote": {"05. price": prices[symbol], "01. symbol": symbol}
-        }
+        mock_response.json.return_value = {"Global Quote": {"05. price": prices[symbol], "01. symbol": symbol}}
         return mock_response
 
     mock_get.side_effect = side_effect
@@ -598,12 +606,10 @@ def test_multiple_stocks_success(mock_get):
 
 
 @patch("src.utils.requests.get")
-def test_get_stock_rounding(mock_get):
+def test_get_stock_rounding(mock_get: Mock) -> None:
     """Тест округления цены"""
     mock_response = Mock()
-    mock_response.json.return_value = {
-        "Global Quote": {"05. price": "255.46789", "01. symbol": "AAPL"}
-    }
+    mock_response.json.return_value = {"Global Quote": {"05. price": "255.46789", "01. symbol": "AAPL"}}
     mock_get.return_value = mock_response
 
     result = get_stock(["AAPL"])
@@ -613,21 +619,21 @@ def test_get_stock_rounding(mock_get):
     assert isinstance(result[0]["price"], float)
 
 
-def test_valid_date_conversion():
+def test_valid_date_conversion() -> None:
     """Тест корректного преобразования даты"""
     assert get_date("2023-12-31") == "31.12.2023"
     assert get_date("2024-01-01") == "01.01.2024"
     assert get_date("1999-12-31") == "31.12.1999"
 
 
-def test_single_digit_dates():
+def test_single_digit_dates() -> None:
     """Тест дат с однозначными числами"""
     assert get_date("2023-01-01") == "01.01.2023"
     assert get_date("2023-1-1") == "2023-1-1"  # Неправильный формат - вернется как есть
     assert get_date("2023-09-05") == "05.09.2023"
 
 
-def test_invalid_dates():
+def test_invalid_dates() -> None:
     """Тест невалидных дат"""
     # Несуществующие даты
     assert get_date("2023-02-30") == "2023-02-30"  # 30 февраля не существует
@@ -635,7 +641,7 @@ def test_invalid_dates():
     assert get_date("2023-00-01") == "2023-00-01"  # 0 месяца не существует
 
 
-def test_basic_date_filtering():
+def test_basic_date_filtering() -> None:
     """Тест базовой фильтрации по датам"""
     data = [
         {"Дата платежа": "01.01.2023", "Сумма": 100},
@@ -655,7 +661,7 @@ def test_basic_date_filtering():
     assert result == expected
 
 
-def test_filter_by_date_empty_result():
+def test_filter_by_date_empty_result() -> None:
     """Тест когда нет данных в указанном диапазоне"""
     data = [
         {"Дата платежа": "01.01.2023", "Сумма": 100},
@@ -666,7 +672,7 @@ def test_filter_by_date_empty_result():
     assert result == []
 
 
-def test_boundary_dates():
+def test_boundary_dates() -> None:
     """Тест граничных дат"""
     data = [
         {"Дата платежа": "01.01.2023", "Сумма": 100},

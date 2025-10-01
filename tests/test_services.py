@@ -1,11 +1,11 @@
 import json
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 from src.services import simple_search
 
 
 @patch("src.services.read_transactions_xlsx")
-def test_search_returns_valid_json_string(mock_read_xlsx):
+def test_search_returns_valid_json_string(mock_read_xlsx: MagicMock) -> None:
     """Тест что функция возвращает валидную JSON строку"""
     # Мокаем данные
     mock_data = [
@@ -26,7 +26,7 @@ def test_search_returns_valid_json_string(mock_read_xlsx):
 
 
 @patch("src.services.read_transactions_xlsx")
-def test_search_by_description(mock_read_xlsx):
+def test_search_by_description(mock_read_xlsx: MagicMock) -> None:
     """Тест поиска по описанию"""
     mock_data = [
         {"Описание": "Покупка в магазине", "Категория": "Еда", "Сумма": -100},
@@ -43,7 +43,7 @@ def test_search_by_description(mock_read_xlsx):
 
 
 @patch("src.services.read_transactions_xlsx")
-def test_search_by_category(mock_read_xlsx):
+def test_search_by_category(mock_read_xlsx: MagicMock) -> None:
     """Тест поиска по категории"""
     mock_data = [
         {"Описание": "Покупка в магазине", "Категория": "Еда", "Сумма": -100},
@@ -59,7 +59,7 @@ def test_search_by_category(mock_read_xlsx):
 
 
 @patch("src.services.read_transactions_xlsx")
-def test_case_insensitive_search(mock_read_xlsx):
+def test_case_insensitive_search(mock_read_xlsx: MagicMock) -> None:
     """Тест поиска без учета регистра"""
     mock_data = [
         {"Описание": "Покупка в Магазине", "Категория": "Еда", "Сумма": -100},

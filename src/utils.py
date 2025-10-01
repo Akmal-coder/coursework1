@@ -16,9 +16,7 @@ logger = logging.getLogger("utils")
 logger.setLevel(logging.DEBUG)
 log_file = LOG_DIR / "utils.log"
 file_handler = logging.FileHandler(log_file, mode="w")
-file_formatter = logging.Formatter(
-    "%(asctime)s - %(name)s - %(levelname)s - %(funcName)s: %(message)s"
-)
+file_formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(funcName)s: %(message)s")
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
@@ -149,9 +147,7 @@ def get_card_infos(transactions: list[dict]) -> list[dict]:
         card_number = get_last_four(str(card_number))
         total_spent = abs(round(total_amount, 2))
         cashback = get_cashback(total_spent)
-        card_info = dict(
-            last_digits=card_number, total_spent=total_spent, cashback=cashback
-        )
+        card_info = dict(last_digits=card_number, total_spent=total_spent, cashback=cashback)
         cards.append(card_info)
 
     return cards
